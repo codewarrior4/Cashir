@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GatewayController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,10 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/transactions/weekly', [TransactionController::class, 'getWeeklyTransactions']);
     Route::get('/transactions/monthly', [TransactionController::class, 'getMonthlyTransactions']);
     Route::get('/transactions/yearly', [TransactionController::class, 'getYearlyTransactions']);
+
+    Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
+    Route::get('/payment/poll', [PaymentController::class, 'pollPaymentStatus'])->name('poll.payment.status');
+    Route::get('/payment/success', [PaymentController::class, 'showSuccessPage'])->name('payment.success');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

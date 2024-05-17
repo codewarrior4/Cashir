@@ -52,6 +52,42 @@
           </div>
           <i class="text-info">* Turn Payment gateways off to test other payment methods</i> <br>
         </div>
+        <div class="col-sm-12">
+          
+          <!-- HTML Input Types -->
+          <div class="card">
+            <div class="card-header">
+              <h5>HTML Input Types</h5>
+            </div>
+            <div class="card-body">
+              <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
+                <div class="mb-3">
+                  @csrf
+                  <label for="demo-text-input" class="form-label">Title</label>
+                  <input class="form-control" type="text" max="30" value="John Doe" placeholder="demo-text-input">
+                </div>
+                  <div class="mb-3">
+                    <label for="demo-number-input" n class="form-label">Amount</label>
+                    <input class="form-control" name="amount" type="text" value="120000" id="demo-number-input">
+                  </div>
+                  <div class="mb-3">
+                    <label for="demo-datetime-local" class="form-label">Set Date</label>
+                    <input class="form-control" type="datetime-local" value="2021-12-31T04:03:20" id="demo-datetime-local">
+                  </div>
+                  <input type="hidden" name="email" value="{{ Auth::user()->email }}"> {{-- required --}}
+                
+                  <input type="hidden" name="currency" value="NGN">
+                <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
+                <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value']) }}"> {{-- optional --}}
+                <input type="hidden" name="key" value="{{ config('paystack.secretKey') }}"> {{-- required --}}
+                </div>
+                <div class="card-footer pt-3">
+                  <button class="btn btn-primary me-2">Proceed To Payment</button>
+                  <button type="reset" class="btn btn-secondary">Cancel</button>
+                </div>
+              </form>
+          </div>
+        </div>
         <div class="col-md-7 col-xxl-8">
           <div class="row">
             <div class="col-md-6">
