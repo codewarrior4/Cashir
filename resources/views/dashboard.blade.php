@@ -64,7 +64,7 @@
                 <div class="mb-3">
                   @csrf
                   <label for="demo-text-input" class="form-label">Title</label>
-                  <input class="form-control" type="text" max="30" value="John Doe" placeholder="demo-text-input">
+                  <input class="form-control"  name="title" type="text" max="30" value="John Doe" placeholder="demo-text-input">
                 </div>
                   <div class="mb-3">
                     <label for="demo-number-input" n class="form-label">Amount</label>
@@ -72,7 +72,7 @@
                   </div>
                   <div class="mb-3">
                     <label for="demo-datetime-local" class="form-label">Set Date</label>
-                    <input class="form-control" type="datetime-local" value="2021-12-31T04:03:20" id="demo-datetime-local">
+                    <input class="form-control" name="date" type="datetime-local" value="2024-05-18T19:30"  id="demo-datetime-local">
                   </div>
                   <input type="hidden" name="email" value="{{ Auth::user()->email }}"> {{-- required --}}
                 

@@ -20,6 +20,7 @@ class TransactionFactory extends Factory
             'payment_method' => $this->faker->randomElement(['Paystack', 'Monnify']),
             'amount' => $this->faker->randomFloat(2, 10, 1000),
             'status' => $this->faker->randomElement(['Completed', 'Pending', 'Failed']),
+            'reference' => $this->faker->uuid,
             'created_at' => $this->faker->dateTimeBetween($startDate, $endDate),
             'updated_at' => $this->faker->dateTimeBetween($startDate, $endDate),
         ];

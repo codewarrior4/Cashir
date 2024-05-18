@@ -35,4 +35,7 @@ return [
      */
     'merchantEmail' => env('MERCHANT_EMAIL'),
 
+    'callback_url' => env('PAYSTACK_CALLBACK_URL'),
+
+
 ];
