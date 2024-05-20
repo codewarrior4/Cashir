@@ -33,8 +33,6 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     Route::post('/pay', [PaymentController::class, 'initializePayment'])->name('pay');
     Route::get('/payment/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
-    Route::get('/payment/success', [PaymentController::class, 'showSuccessPage'])->name('payment.success');
-    Route::get('/payment/failed', [PaymentController::class, 'showFailedPage'])->name('payment.failed');
     
 });
 Route::middleware('auth')->group(function () {

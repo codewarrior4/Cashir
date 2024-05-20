@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
-@include('custom')
+
 <div class="container">
     <div class="pc-content">
       <!-- [ breadcrumb ] start -->
@@ -57,22 +57,24 @@
           <!-- HTML Input Types -->
           <div class="card">
             <div class="card-header">
-              <h5>Proceed To make payment</h5>
+              <h5>Proceed To make demo payment</h5>
             </div>
             <div class="card-body">
               <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
+              @include('custom')
+
                 <div class="mb-3">
                   @csrf
                   <label for="demo-text-input" class="form-label">Title</label>
-                  <input class="form-control"  name="title" type="text" max="30" value="John Doe" placeholder="demo-text-input">
+                  <input class="form-control"  name="title" type="text" max="30" placeholder="demo-text-input">
                 </div>
                   <div class="mb-3">
                     <label for="demo-number-input" n class="form-label">Amount</label>
-                    <input class="form-control" name="amount" type="text" value="120000" id="demo-number-input">
+                    <input class="form-control" name="amount" type="text" id="demo-number-input">
                   </div>
                   <div class="mb-3">
                     <label for="demo-datetime-local" class="form-label">Set Date</label>
-                    <input class="form-control" name="date" type="datetime-local" value="2024-05-18T19:30"  id="demo-datetime-local">
+                    <input class="form-control" name="date" type="datetime-local" id="demo-datetime-local">
                   </div>
                   <input type="hidden" name="email" value="{{ Auth::user()->email }}"> {{-- required --}}
                 

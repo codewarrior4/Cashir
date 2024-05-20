@@ -16,6 +16,11 @@ class PaymentController extends Controller
 {
     public function initializePayment(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'amount' => 'required|numeric',
+            'date' => 'required',
+        ]);
         $gateway = GatewaySelector::getActiveGateway();
 
         if (!$gateway) {
@@ -184,17 +189,4 @@ class PaymentController extends Controller
 
     }
 
-    public function showSuccessPage(Request $request)
-    {
-        $paymentDetails = session('paymentDetails') ?? session('transactionDetails');
-        if (!$paymentDetails) {
-            return redirect('/')->with('error', 'No payment details found.');
-        }
-        return view('payment.success', ['paymentDetails' => $paymentDetails]);
-    }
-
-    public function showFailedPage()
-    {
-        return view('payment.failed');
-    }
 }
