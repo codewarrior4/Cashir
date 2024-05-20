@@ -38,15 +38,49 @@ class PaymentController extends Controller
 
     private function initializePaystackPayment(Request $request)
     {
+        Session::put('paymentDetails', $request->all());
         $amountInKobo = $request->amount * 100; // Convert amount to kobo
+
         $request->merge(['amount' => $amountInKobo]); // Update request amount
 
-        try {
-            return Paystack::getAuthorizationUrl()->redirectNow();
-        } catch (\Exception $e) {
-            return back()->with('error', 'The Paystack token has expired. Please try again.');
+        $curl = curl_init();
+
+        $email = $request->email;
+        $amount = $amountInKobo;
+        $callback_url = route('payment.callback'); // Your custom callback route
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.paystack.co/transaction/initialize",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode([
+                'amount' => $amount,
+                'email' => $email,
+                'callback_url' => $callback_url,
+            ]),
+            CURLOPT_HTTPHEADER => [
+                "authorization: Bearer " . config('services.paystack.secret_key'), // Paystack secret key
+                "content-type: application/json",
+                "cache-control: no-cache"
+            ],
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        if ($err) {
+            return back()->with('error', 'Curl returned error: ' . $err);
         }
+
+        $tranx = json_decode($response, true);
+        
+        if (!$tranx['status']) {
+            return back()->with('error', 'API returned error: ' . $tranx['message']);
+        }
+
+        return redirect($tranx['data']['authorization_url']);
     }
+
 
     private function initializeMonnifyPayment(Request $request)
     {
@@ -95,9 +129,18 @@ class PaymentController extends Controller
     private function handlePaystackCallback(Request $request)
     {
         $paymentDetails = Paystack::getPaymentData();
-
+        $requestDetails = Session::get('paymentDetails');
+        
         if ($paymentDetails['status'] == 'success') {
-            return redirect()->route('payment.success')->with('paymentDetails', $paymentDetails['data']);
+            Transaction::create([
+                'title' => $requestDetails['title'],
+                'reference' => $paymentDetails['data']['reference'],
+                'amount' => $requestDetails['amount'],
+                'status' => 'Completed',
+                'payment_method' => 'Paystack',
+                'created_at' => $requestDetails['date'],
+            ]);
+            return redirect()->route('dashboard')->with('success','Payment successful.');
         }
 
         return redirect()->route('payment.failed');
@@ -116,7 +159,6 @@ class PaymentController extends Controller
 
         if ($response->successful()) {
             $transactionDetails = $response->json()['responseBody'];
-           
             $paymentDetails = Session::get('paymentDetails');
 
             $status = $transactionDetails['paymentStatus'];
@@ -124,8 +166,8 @@ class PaymentController extends Controller
                 $status = 'Completed';
             } elseif ($status === 'FAILED') {
                 $status = 'Failed';
-            } elseif ($status === 'CANCELLED') {
-                $status = 'Cancelled';
+            } elseif ($status === 'PENDING') {
+                $status = 'Pending';
             }
             
             Transaction::create([

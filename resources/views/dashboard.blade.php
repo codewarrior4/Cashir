@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
-
-<div class="pc-container">
+@include('custom')
+<div class="container">
     <div class="pc-content">
       <!-- [ breadcrumb ] start -->
       <div class="page-header">
@@ -15,7 +15,7 @@
             </div>
             <div class="col-md-12">
               <div class="page-header-title">
-                <h2 class="mb-0">Finance</h2>
+                <h2 class="mb-0">Cashir Dashboard</h2>
               </div>
             </div>
           </div>
@@ -41,8 +41,8 @@
                 <div class="form-check">
                   <input name="monnify" value="1" class="form-check-input" @if ($gateways->monnify == 1)
                   checked
-                @endif type="checkbox" id="inlineFormCheck">
-                  <label class="form-check-label"  for="inlineFormCheck"> Monnify </label>
+                @endif type="checkbox" id="Monnify">
+                  <label class="form-check-label"  for="Monnify"> Monnify </label>
                 </div>
               </div>
               <div class="col-12">
@@ -57,7 +57,7 @@
           <!-- HTML Input Types -->
           <div class="card">
             <div class="card-header">
-              <h5>HTML Input Types</h5>
+              <h5>Proceed To make payment</h5>
             </div>
             <div class="card-body">
               <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
@@ -96,7 +96,7 @@
                   <div class="d-flex align-items-start justify-content-between mb-3">
                     <div>
                       <h6 class="mb-0">Transactions</h6>
-                      <p class="mb-0 text-muted">Entire Transaction</p>
+                      <p class="mb-0 text-muted">All Transaction</p>
                     </div>
                     <div class="dropdown">
                       <a class="avtar avtar-xs btn-link-secondary dropdown-toggle arrow-none" href="#"
@@ -112,7 +112,8 @@
                     </div>
                   </div>
                   <div class="d-flex align-items-center justify-content-between gap-2 mt-3">
-                    <h4 class="mb-0">&#8358; {{ number_format($transactions->sum('amount'),2) }}</h4>
+                    <h4 class="mb-0">&#8358; {{ number_format($transactions->where('status', 'Completed')->sum('amount'), 2) }}
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -127,7 +128,7 @@
              
             </div>
             <div class="card-body">
-              <div class="dt-responsive">
+              <div class="dt-responsive table-responsive">
                 <table id="dom-jqry" class="table table-striped table-responsive table-bordered nowrap">
                   <thead>
                     <tr>

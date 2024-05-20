@@ -10,7 +10,8 @@ class TransactionController extends Controller
 {
     public function getTodayTransactions()
     {
-        $transactions = Transaction::whereDate('created_at', Carbon::today())->get();
+        $transactions = Transaction::whereDate('created_at', Carbon::today())
+        ->get();
         return response()->json($transactions);
     }
 

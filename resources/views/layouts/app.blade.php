@@ -33,8 +33,9 @@
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="main-style-link" >
   <link rel="stylesheet" href="{{ asset('assets/css/style-preset.css') }}" >
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  
 
 </head>
 <!-- [Head] end -->
@@ -49,10 +50,10 @@
 </div>
 <!-- [ Pre-loader ] End -->
  <!-- [ Sidebar Menu ] start -->
-@include('layouts.navigation')
+{{-- @include('layouts.navigation') --}}
 <!-- [ Sidebar Menu ] end -->
  <!-- [ Header Topbar ] start -->
-@include('layouts.header')
+{{-- @include('layouts.header') --}}
 <!-- [ Header ] end -->
 
 
@@ -76,7 +77,8 @@
   <script src="{{ asset('assets/js/fonts/custom-font.js') }}"></script>
   <script src="{{ asset('assets/js/pcoded.js') }}"></script>
   <script src="{{ asset('assets/js/form.js') }}"></script>
-  <script src="{{ asset('assets/js/plugins/feather.min.js') }}"></script>
+  <script src="{{ asset('assets/js/plugins/feather.min.js') }}"></script> 
+
 
   <script>
     var total, pageTotal;

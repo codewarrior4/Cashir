@@ -2368,6 +2368,32 @@ textarea.form-control-lg {
   height: calc(1.5em + 1.55rem + 2px);
 }
 
+    .toast-success .toast-message:before {
+        content: "\f00c"; /* Font Awesome check icon */
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 10px;
+    }
+    .toast-error .toast-message:before {
+        content: "\f057"; /* Font Awesome times icon */
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 10px;
+    }
+    .toast-info .toast-message:before {
+        content: "\f05a"; /* Font Awesome info-circle icon */
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 10px;
+    }
+    .toast-warning .toast-message:before {
+        content: "\f071"; /* Font Awesome exclamation-triangle icon */
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 10px;
+    }
+
+
 .form-select, .datatable-selector {
   --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%231D2630' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
   display: block;

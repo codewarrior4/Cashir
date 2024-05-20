@@ -9,21 +9,13 @@
 @endif 
 @if (session('success'))
 <script>
-     swal(
-        'Done',
-        '{{ session('success') }}',
-        'success',
-    )
+     toastr.success('{{ session('success','Done') }}');
 </script>
 
 @endif
 
 @if (session('error'))
     <script>
-        swal(
-            'Error',
-            '{{ session('error') }}',
-            'error',
-        )
+        toastr.error('{{ session('error','Error Occured') }}');
     </script>
 @endif
